@@ -1,0 +1,105 @@
+{
+  "name": "api.ipaayos.com",
+  "preferGlobal": true,
+  "scripts": {
+    "prestart": "npm run -s build",
+    "start": "node dist/index.js",
+    "dev": "node -r esm src/index.js",
+    "clean": "rimraf dist && rimraf -p",
+    "copy": "ncp src/templates dist/templates && ncp src/database/migrations dist/database/migrations && ncp uploads dist/uploads && ncp .env dist/.env",
+    "build": "npm run clean && mkdir -p dist && tsc && babel dist/build -s -D -d dist && npm run copy && rmdir -p && rimraf dist/build",
+    "build-orig": "npm run clean && mkdir -p dist && tsc && babel dist/build -s -D -d dist && rm -rf dist/build && mkdir dist/database/migrations && mkdir dist/templates && mkdir dist/uploads && cp -R uploads/** dist/uploads  && cp src/database/migrations/*.* dist/database/migrations/ && cp -R src/templates/** dist/templates/ && cp .env dist/.env",
+    "lint": "eslint --format codeframe src/index.js src/controllers/** app/**",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "production": "npm run build && cd dist && pm2 start index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
+    "cherio": "^1.0.0-rc.2",
+    "common-env": "^6.3.0",
+    "cors": "^2.8.5",
+    "cors-anywhere": "^0.4.4",
+    "debug": "^4.1.1",
+    "dotenv": "^6.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "express-session": "^1.15.6",
+    "geoip-lite": "^1.4.2",
+    "html-pdf": "^3.0.1",
+    "http-proxy": "^1.17.0",
+    "http-proxy-middleware": "^2.0.6",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "mysql-import": "^5.0.21",
+    "mysql2": "^2.3.3",
+    "ncp": "^2.0.0",
+    "node-redis": "^0.1.7",
+    "nodemailer": "^6.6.2",
+    "numeral": "^2.0.6",
+    "parse-json": "^2.2.0",
+    "pug": "^3.0.2",
+    "redis": "^3.1.2",
+    "request": "^2.88.2",
+    "rimraf": "^3.0.2",
+    "sequelize": "^5.22.4",
+    "sharp": "^0.30.4",
+    "shortid": "^2.2.14",
+    "socket.io": "^4.5.4",
+    "stripe": "^8.145.0",
+    "urlencode": "^1.1.0",
+    "uuid": "^3.3.2"
+  },
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/gapi": "0.0.36",
+    "@types/node": "^18.11.9",
+    "@types/redis": "^2.8.32",
+    "@types/sequelize": "^4.28.9",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "faker": "^4.1.0",
+    "lodash.random": "^3.2.0",
+    "lodash.times": "^4.3.2",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "prettier": "^1.18.2",
+    "sequelize-cli": "^5.4.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.2.3"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread",
+      "transform-class-properties"
+    ]
+  }
+}
